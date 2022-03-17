@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/Player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/World/World.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Menu/Menu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/HUD/HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/Game/Music.gd" type="Script" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Higher"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -10.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Lower"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -10.0 ]
+}
+
+[node name="Game" type="Node"]
+
+[node name="Menu" parent="." instance=ExtResource( 3 )]
+
+[node name="HUD" parent="." instance=ExtResource( 4 )]
+
+[node name="World" parent="." instance=ExtResource( 2 )]
+
+[node name="Player" parent="World" instance=ExtResource( 1 )]
+position = Vector2( 432.344, 565.357 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
+autoplay = true
+script = ExtResource( 5 )
+
+[node name="DelayTimer" type="Timer" parent="Music"]
+wait_time = 3.0
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Music"]
+anims/Higher = SubResource( 1 )
+anims/Lower = SubResource( 2 )
+
+[connection signal="start" from="Menu" to="HUD" method="_on_Menu_start"]
+[connection signal="start" from="Menu" to="Music" method="_on_Menu_start"]
+[connection signal="start" from="Menu" to="World" method="_on_Menu_start"]
+[connection signal="died" from="World/Player" to="Menu" method="_on_Player_died"]
+[connection signal="died" from="World/Player" to="HUD" method="_on_Player_died"]
+[connection signal="died" from="World/Player" to="Music" method="_on_Player_died"]
+[connection signal="died" from="World/Player" to="World" method="_on_Player_died"]
+[connection signal="low_energy" from="World/Player" to="HUD" method="_on_Player_low_energy"]
+[connection signal="new_high_score" from="World/Player" to="Menu" method="_on_Player_new_high_score"]
+[connection signal="score_changed" from="World/Player" to="HUD" method="_on_Player_score_changed"]
+[connection signal="finished" from="Music" to="Music" method="play_random_music"]
+[connection signal="timeout" from="Music/DelayTimer" to="Music" method="_on_DelayTimer_timeout"]

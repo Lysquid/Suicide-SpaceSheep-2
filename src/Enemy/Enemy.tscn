@@ -1,0 +1,108 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/enemy.png" type="Texture" id=1]
+[ext_resource path="res://src/Enemy/Enemy.gd" type="Script" id=2]
+[ext_resource path="res://src/Loot/Loot.tscn" type="PackedScene" id=3]
+[ext_resource path="res://sound/hit.wav" type="AudioStream" id=4]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 101, 53 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 53, 101, 53 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="Animation" id=4]
+resource_name = "Death"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Default"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Freeze"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:speed")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 20 ]
+}
+
+[node name="Enemy" type="Area2D" groups=[
+"enemies",
+"objects",
+]]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+Loot = ExtResource( 3 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( -5.51353, 1.18125 )
+rotation = 0.0258209
+scale = Vector2( 1.4, 1.4 )
+frames = SubResource( 3 )
+playing = true
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 4.77193, 1.19203 )
+rotation = 1.58982
+polygon = PoolVector2Array( -1.9806, -58.1389, -10.81, -46.1561, -18.5882, -26.1847, -21.5313, -11.8895, -21.1108, 4.71822, -18.7982, 21.3259, -15.4346, 34.57, -10.179, 32.0473, -0.508701, 31.6268, 11.4741, 32.4677, 15.8888, 34.5699, 19.883, 24.8996, 21.9852, 14.3884, 23.667, 0.513574, 21.5647, -15.8839, 15.8885, -33.3325, 7.47953, -47.8379 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Default"
+anims/Death = SubResource( 4 )
+anims/Default = SubResource( 5 )
+anims/Freeze = SubResource( 6 )
+
+[node name="DieSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -10.0
+
+[connection signal="body_entered" from="." to="." method="_on_Enemy_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

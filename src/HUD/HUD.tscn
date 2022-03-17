@@ -1,0 +1,166 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/HUD/Stats_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/HUD/HUD.gd" type="Script" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "LowEnergy"
+length = 0.9
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Milestone"
+length = 0.9
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Hide"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HBoxContainer:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Show"
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HBoxContainer:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource( 2 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+margin_left = 31.0
+margin_top = 29.0
+margin_right = -36.0
+margin_bottom = 127.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Energy" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 136.0
+margin_bottom = 98.0
+
+[node name="Name" type="Label" parent="HBoxContainer/Energy"]
+margin_right = 136.0
+margin_bottom = 47.0
+rect_pivot_offset = Vector2( -464.011, -66.3821 )
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 1 )
+text = "Energy"
+
+[node name="Value" type="Label" parent="HBoxContainer/Energy"]
+margin_top = 51.0
+margin_right = 136.0
+margin_bottom = 98.0
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 1 )
+text = "15"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HBoxContainer/Energy"]
+anims/LowEnergy = SubResource( 1 )
+
+[node name="Score" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 1746.0
+margin_right = 1853.0
+margin_bottom = 98.0
+size_flags_horizontal = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="HBoxContainer/Score"]
+margin_right = 107.0
+margin_bottom = 47.0
+size_flags_horizontal = 10
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 1 )
+text = "Score"
+
+[node name="Value" type="Label" parent="HBoxContainer/Score"]
+margin_left = 68.0
+margin_top = 51.0
+margin_right = 107.0
+margin_bottom = 98.0
+size_flags_horizontal = 10
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 1 )
+text = "10"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HBoxContainer/Score"]
+anims/Milestone = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Hide = SubResource( 3 )
+anims/Show = SubResource( 4 )

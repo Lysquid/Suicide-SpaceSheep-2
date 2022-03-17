@@ -1,0 +1,84 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://assets/space.png" type="Texture" id=1]
+[ext_resource path="res://src/Enemy/Enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/World/World.gd" type="Script" id=3]
+[ext_resource path="res://src/Loot/Loot.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/Player/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://sound/new_wave.wav" type="AudioStream" id=6]
+[ext_resource path="res://sound/start.wav" type="AudioStream" id=7]
+
+[sub_resource type="PhysicsMaterial" id=1]
+bounce = 1.0
+
+[sub_resource type="SegmentShape2D" id=2]
+b = Vector2( 0, 1080 )
+
+[sub_resource type="SegmentShape2D" id=3]
+a = Vector2( 1920, 0 )
+b = Vector2( 1920, 1080 )
+
+[sub_resource type="SegmentShape2D" id=4]
+b = Vector2( 1920, 0 )
+
+[sub_resource type="SegmentShape2D" id=5]
+a = Vector2( 1920, 1080 )
+b = Vector2( 0, 1080 )
+
+[sub_resource type="Curve2D" id=6]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 2039.99, -114.437, 0, 0, 0, 0, 2039.99, 1194.44, 0, 0, 0, 0, -120, 1194.44, 0, 0, 0, 0, -120, -114.437, 0, 0, 0, 0, 2039.99, -114.437 )
+}
+
+[node name="World" type="Node2D"]
+script = ExtResource( 3 )
+Loot = ExtResource( 4 )
+Enemy = ExtResource( 2 )
+Player = ExtResource( 5 )
+
+[node name="Background" type="Sprite" parent="."]
+z_index = -100
+texture = ExtResource( 1 )
+centered = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Boundaries" type="StaticBody2D" parent="."]
+collision_mask = 0
+physics_material_override = SubResource( 1 )
+
+[node name="Left" type="CollisionShape2D" parent="Boundaries"]
+shape = SubResource( 2 )
+
+[node name="Right" type="CollisionShape2D" parent="Boundaries"]
+shape = SubResource( 3 )
+
+[node name="Top" type="CollisionShape2D" parent="Boundaries"]
+shape = SubResource( 4 )
+
+[node name="Bottom" type="CollisionShape2D" parent="Boundaries"]
+shape = SubResource( 5 )
+
+[node name="NewWaveTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="EnemySpawn" type="Path2D" parent="."]
+position = Vector2( -64, -64 )
+scale = Vector2( 1.06667, 1.11852 )
+curve = SubResource( 6 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemySpawn"]
+position = Vector2( 2039.99, -114.437 )
+rotation = 1.57083
+scale = Vector2( 1.01273, 65.4778 )
+
+[node name="NewWaveSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -12.0
+
+[node name="StartSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -10.0
+
+[connection signal="timeout" from="NewWaveTimer" to="." method="new_wave"]

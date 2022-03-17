@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/load_bullet.wav-fdeee1270a02b60fab773c2659daa3cb.sample"
+
+[deps]
+
+source_file="res://sound/load_bullet.wav"
+dest_files=[ "res://.import/load_bullet.wav-fdeee1270a02b60fab773c2659daa3cb.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

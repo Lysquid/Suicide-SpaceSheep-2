@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Hyper.mp3-bff98b096dcd337d5594a98bde3e3913.mp3str"
+
+[deps]
+
+source_file="res://music/Hyper.mp3"
+dest_files=[ "res://.import/Hyper.mp3-bff98b096dcd337d5594a98bde3e3913.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

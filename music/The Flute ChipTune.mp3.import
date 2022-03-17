@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/The Flute ChipTune.mp3-47cd035cca92eb7b64f403b88efdfe0a.mp3str"
+
+[deps]
+
+source_file="res://music/The Flute ChipTune.mp3"
+dest_files=[ "res://.import/The Flute ChipTune.mp3-47cd035cca92eb7b64f403b88efdfe0a.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
